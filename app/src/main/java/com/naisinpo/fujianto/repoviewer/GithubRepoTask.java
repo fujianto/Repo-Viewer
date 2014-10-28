@@ -14,11 +14,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by fujianto on 28/10/14.
  */
-public class GithubRepoTask extends AsyncTask<String, Void, String[]> {
+public class GithubRepoTask extends AsyncTask<String, Void, ArrayList<String>> {
     private ProgressDialog progressDialog;
     public Context context;
     private ArrayAdapter<String> repoAdapter;
@@ -59,10 +60,10 @@ public class GithubRepoTask extends AsyncTask<String, Void, String[]> {
      * @see #publishProgress
      */
     @Override
-    protected String[] doInBackground(String... params) {
+    protected ArrayList<String> doInBackground(String... params) {
         final String BASE_URL = "https://api.github.com/";
         final String USER_PARAM = "users";
-        final String OWNER_PARAM = "fujianto";
+        final String OWNER_PARAM = params[0];
         final String REPO_PARAM = "repos";
         final String apiURL = BASE_URL+USER_PARAM+"/"+OWNER_PARAM+"/"+REPO_PARAM;
 
@@ -70,7 +71,7 @@ public class GithubRepoTask extends AsyncTask<String, Void, String[]> {
         GithubRepoParser parsedData = new GithubRepoParser(jsonString);
 
         try {
-            String[] listName = parsedData.getListRepoDataFromJSON("name");
+            ArrayList<String> listName = parsedData.getListRepoDataFromJSON("name");
             return listName;
 
         } catch (JSONException e) {
@@ -92,14 +93,14 @@ public class GithubRepoTask extends AsyncTask<String, Void, String[]> {
      * @see #onCancelled(Object)
      */
     @Override
-    protected void onPostExecute(String[] results) {
+    protected void onPostExecute(ArrayList<String> results) {
         super.onPostExecute(results);
         progressDialog.dismiss();
 
         if(results!= null){
             repoAdapter.clear();
-            for(int i = 0; i < results.length; i++){
-                repoAdapter.add(results[i]);
+            for(String listName : results){
+                repoAdapter.add(listName);
             }
         }
     }

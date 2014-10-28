@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * Created by fujianto on 28/10/14.
  */
@@ -15,9 +17,9 @@ public class GithubRepoParser {
         this.jsonString = jsonString;
     }
 
-    public String[] getListRepoDataFromJSON(String dataString) throws JSONException{
+    public ArrayList<String> getListRepoDataFromJSON(String dataString) throws JSONException{
         int itemShown = 7;
-        String[] result = new String[itemShown];
+        ArrayList<String> result = new ArrayList<String>();
         JSONArray repoArray = new JSONArray(jsonString);
         final String REPO_DATA = dataString;
 //        final String REPO_HTML_URL = "html_url";
@@ -36,7 +38,7 @@ public class GithubRepoParser {
 //            String repoUpdated = jsonObjRepo.getString(REPO_UPDATED_AT);
 //            String repoHomepage = jsonObjRepo.getString(REPO_HOMEPAGE);
 //            String repoLang = jsonObjRepo.getString(REPO_LANGUAGE);
-            result[i] = repoName;
+            result.add(i, repoName);
 
         }
 
