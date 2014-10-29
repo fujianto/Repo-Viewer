@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by fujianto on 28/10/14.
  */
-public class GithubRepoTask extends AsyncTask<String, Void, ArrayList<String>> {
+public class GithubRepoTask extends AsyncTask<String, Void, ArrayList<ArrayList<String>> > {
     private ProgressDialog progressDialog;
     public Context context;
     private ArrayAdapter<String> repoAdapter;
@@ -60,7 +60,7 @@ public class GithubRepoTask extends AsyncTask<String, Void, ArrayList<String>> {
      * @see #publishProgress
      */
     @Override
-    protected ArrayList<String> doInBackground(String... params) {
+    protected ArrayList<ArrayList<String>> doInBackground(String... params) {
         final String BASE_URL = "https://api.github.com/";
         final String USER_PARAM = "users";
         final String OWNER_PARAM = params[0];
@@ -71,8 +71,8 @@ public class GithubRepoTask extends AsyncTask<String, Void, ArrayList<String>> {
         GithubRepoParser parsedData = new GithubRepoParser(jsonString);
 
         try {
-            ArrayList<String> listName = parsedData.getListRepoDataFromJSON("name");
-            return listName;
+            ArrayList<ArrayList<String>> listData = parsedData.getListRepoDataFromJSON();
+            return listData;
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -93,14 +93,19 @@ public class GithubRepoTask extends AsyncTask<String, Void, ArrayList<String>> {
      * @see #onCancelled(Object)
      */
     @Override
-    protected void onPostExecute(ArrayList<String> results) {
+    protected void onPostExecute(ArrayList<ArrayList<String>> results) {
         super.onPostExecute(results);
         progressDialog.dismiss();
 
         if(results!= null){
             repoAdapter.clear();
-            for(String listName : results){
-                repoAdapter.add(listName);
+
+            ArrayList<String> listRepoName = results.get(0);
+            ArrayList<String> listRepoDesc = results.get(1);
+            ArrayList<String> listRepoLang = results.get(2);
+
+            for(String listValue : listRepoName){
+                repoAdapter.add(listValue);
             }
         }
     }
