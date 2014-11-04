@@ -1,0 +1,9 @@
+<resources>
+    <string name="title_activity_settings">Settings</string>
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+    <string name="pref_title_username">Github Username</string>
+    <string name="pref_username_key">pref_username</string>
+    <!--<string name="pref_username_default">fujianto</string>-->
+
+</resources>

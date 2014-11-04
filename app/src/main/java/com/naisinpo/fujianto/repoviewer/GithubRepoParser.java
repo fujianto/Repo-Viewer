@@ -30,6 +30,7 @@ public class GithubRepoParser {
         final String REPO_LANGUAGE = "language";
 
         ArrayList<String> listRepoName = new ArrayList<String>();
+        ArrayList<String> listRepoURL = new ArrayList<String>();
         ArrayList<String> listRepoDesc = new ArrayList<String>();
         ArrayList<String> listRepoLang = new ArrayList<String>();
 
@@ -45,14 +46,16 @@ public class GithubRepoParser {
 
             // Add to Array List for each value from JSON
             listRepoName.add(i, repoName);
+            listRepoURL.add(i, repoURL);
             listRepoDesc.add(i, repoDesc);
             listRepoLang.add(i, repoLang);
         }
 
         // Each JSON Array List in a single ArrayList result
         results.add(0, listRepoName);
-        results.add(1, listRepoDesc);
-        results.add(2, listRepoLang);
+        results.add(1, listRepoURL);
+        results.add(2, listRepoDesc);
+        results.add(3, listRepoLang);
 
 
         return results;
